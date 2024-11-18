@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cat /etc/hosts | while read ip dom
+do
+	if [ $ip = "#" ]
+	then
+		break
+	fi
+	output=`nslookup $dom 8.8.8.8 | grep Adress | awk '{print $2}'`
+	if [[ $output != $ip ]]
+	then
+		echo "$output"
+	fi
+done
